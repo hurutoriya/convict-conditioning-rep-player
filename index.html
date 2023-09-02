@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      Convict Conditioning Rep Player
+      プリズナートレーニングのワークアウト間隔を音声で管理
+    </title>
+    <style>
+      /* p要素を大きくフォントサイズを設定 */
+      p {
+        font-size: 72px; /* 適切なフォントサイズに変更 */
+        text-align: center; /* テキストを中央に配置 */
+      }
+      input {
+        text-align: center; /* テキストを中央に配置 */
+      }
+      form {
+        text-align: center; /* テキストを中央に配置 */
+      }
+      footer {
+        background-color: #333; /* フッターの背景色 */
+        text-align: center; /* テキストを中央に配置 */
+        padding: 10px 0; /* 上下の余白 */
+      }
+      /* ライトモードのスタイル */
+      body {
+        background-color: white;
+        color: black;
+      }
+      /* ダークモードのスタイル */
+      @media (prefers-color-scheme: dark) {
+        body {
+          background-color: black;
+          color: white;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <form id="playbackForm">
+      <label for="playbackCount">Number of Rep:</label>
+      <input type="number" id="playbackCount" min="1" value="50" />
+      <p><span id="playCount">0</span></p>
+      <button type="submit">START</button>
+    </form>
+    <p><span id="finish"> </span></p>
+
+    <audio id="audioPlayer" controls hidden>
+      <source src="data/cadence.mp3" type="audio/mp3" />
+    </audio>
+    <footer>
+      &copy; 2023
+      プリズナートレーニングのワークアウト間隔を音声で管理できるWEBアプリです。
+      <br />
+      2秒→1秒→2秒の音楽が指定回数再生されます。
+      <br />
+      指定回数再生後は、歓声が流れ、絵文字が表示されます。
+      <br />
+      作成者: https://shunyaueta.com/
+    </footer>
+    <script>
+      const playbackForm = document.getElementById("playbackForm");
+      const playbackCountInput = document.getElementById("playbackCount");
+      const audioPlayer = document.getElementById("audioPlayer");
+      const playCountElement = document.getElementById("playCount");
+      const finishElement = document.getElementById("finish");
+
+      // フォームが送信されたときの処理
+      playbackForm.addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        const playbackCount = parseInt(playbackCountInput.value);
+
+        if (isNaN(playbackCount) || playbackCount < 1) {
+          alert("再生回数は1以上の数字で入力してください。");
+          return;
+        }
+
+        playAudio(playbackCount);
+      });
+      let playCount = 0;
+
+      // 音声を再生する関数
+      function playAudio(playbackCount) {
+        const audioPromise = audioPlayer.play();
+        if (audioPromise !== undefined) {
+          audioPromise
+            .then(() => {
+              // 音声再生完了時の処理
+              let remainingCount = playbackCount - 1;
+              audioPlayer.addEventListener("ended", function playNext() {
+                if (remainingCount > 0) {
+                  audioPlayer.play();
+                  remainingCount--;
+                  playCount++;
+                  playCountElement.textContent = playCount;
+                } else {
+                  audioPlayer.removeEventListener("ended", playNext);
+                  playCount++;
+                  playCountElement.textContent = playCount;
+                  finishElement.textContent = "🎉💪🎉";
+                  audioPlayer.src = "data/applause.mp3";
+                  audioPlayer.play();
+                }
+              });
+            })
+            .catch((error) => {
+              console.error("音声再生中にエラーが発生しました:", error);
+            });
+        }
+      }
+    </script>
+  </body>
+</html>
