@@ -24,41 +24,37 @@
   </head>
   <body>
     <main class="container">
-      <article>
-        <header>Convict Conditioning Sound Timer</header>
-        <form id="playbackForm">
-          <label for="playbackCount">Number of Rep:</label>
-          <input type="number" id="playbackCount" min="1" value="50" />
-          <p><span id="playCount">0</span></p>
-          <button type="submit">START</button>
-        </form>
-        <p><span id="finish"> </span></p>
+      <form id="playbackForm">
+        <label for="playbackCount">Number of Rep:</label>
+        <input type="number" id="playbackCount" min="1" value="50" />
+        <p><span id="playCount">0</span></p>
+        <button type="submit">START</button>
+      </form>
+      <p><span id="finish"> </span></p>
 
-        <audio id="audioPlayer" controls hidden>
-          <source src="data/cadence.mp3" type="audio/mp3" />
-        </audio>
-        <footer>
-          &copy; 2023
-          <a href="https://amzn.to/3qZzihG">プリズナートレーニング</a
-          >のワークアウト間隔を音声で管理できるWEBアプリです。
-          2秒→1秒→2秒の音楽が指定回数再生されます。
-          指定回数再生後は、歓声が流れ、絵文字が表示されます。
-          <br />
-          This is a web application that allows you to manage your Convict
-          Conditioning workout intervals with audio. Music of 2 seconds → 1
-          second → 2 seconds is played a specified number of times. After the
-          specified number of playback, a cheer will be played and a pictogram
-          will be displayed.
-          <br />
-          Author: <a href="https://shunyaueta.com/"> https://shunyaueta.com/</a>
-          <br />
-          Code:
-          <a
-            href="https://github.com/hurutoriya/convict-conditioning-rep-player"
-            >https://github.com/hurutoriya/convict-conditioning-rep-player</a
-          >
-        </footer>
-      </article>
+      <audio id="audioPlayer" controls hidden>
+        <source src="data/cadence.mp3" type="audio/mp3" />
+      </audio>
+      <footer>
+        &copy; 2023
+        <a href="https://amzn.to/3qZzihG">プリズナートレーニング</a
+        >のワークアウト間隔を音声で管理できるWEBアプリです。
+        2秒→1秒→2秒の音楽が指定回数再生されます。
+        指定回数再生後は、歓声が流れ、絵文字が表示されます。
+        <br />
+        This is a web application that allows you to manage your Convict
+        Conditioning workout intervals with audio. Music of 2 seconds → 1 second
+        → 2 seconds is played a specified number of times. After the specified
+        number of playback, a cheer will be played and a pictogram will be
+        displayed.
+        <br />
+        Author: <a href="https://shunyaueta.com/"> https://shunyaueta.com/</a>
+        <br />
+        Code:
+        <a href="https://github.com/hurutoriya/convict-conditioning-rep-player"
+          >https://github.com/hurutoriya/convict-conditioning-rep-player</a
+        >
+      </footer>
     </main>
     <script>
       const playbackForm = document.getElementById("playbackForm");
